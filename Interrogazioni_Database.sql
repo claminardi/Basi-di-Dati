@@ -14,7 +14,7 @@ use universita;
 
 	select matricola, nome, cognome
 	from docente
-	where data_nascita < '1959-01-01';
+	where timestampdiff(year, data_nascita, curdate()) > 60;
 
 	/*
 	Mostrare nome, cognome e nome del dipartimento di ogni docente, ordinati dal più giovane al più anziano.
