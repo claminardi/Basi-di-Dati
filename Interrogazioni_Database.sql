@@ -37,17 +37,11 @@ use universita;
 	ordinate alfabeticamente prima per nome dipartimento, poi per nome città e infine per indirizzo.
 	*/
 
-	select d.nome, s.citta, s.indirizzo 
-	from dipartimento as d join sede_dipartimento as sd on d.codice = sd.codice_dipartimento join sede as s on codice_sede = s.codice
-	order by d.nome;
-
-	select d.nome, s.citta, s.indirizzo 
-	from dipartimento as d join sede_dipartimento as sd on d.codice = sd.codice_dipartimento join sede as s on codice_sede = s.codice
-	order by s.citta;
-
-	select d.nome, s.citta, s.indirizzo 
-	from dipartimento as d join sede_dipartimento as sd on d.codice = sd.codice_dipartimento join sede as s on codice_sede = s.codice
-	order by s.indirizzo;
+	select d.nome as nomeDipartimento, s.citta, s.indirizzo
+        from dipartimento as d, sede as s, sede_dipartimento as sd
+        where d.codice = sd.codice_dipartimento and
+        sd.codice_sede = s.codice
+        order by d.nome, s.citta, s.indirizzo;
 
 	/*
 	Mostrare il nome di ogni dipartimento che ha una sede a Bari.
@@ -62,10 +56,12 @@ use universita;
 	Mostrare il nome di ogni dipartimento che non ha sede a Brindisi.
 	*/
 
-	select d.nome
-	from dipartimento as d join sede_dipartimento as sd on d.codice = sd.codice_dipartimento
-	join sede as s on codice_sede = s.codice
-	where citta <> 'Brindisi';
+	select d.nome as nomeDipartimento
+        from dipartimento as d
+        where d.nome not in (select sd.codice_dipartimento
+        from sede as s, sede_dipartimento as sd
+        where sd.codice_sede = s.codice
+        and s.citta = 'Brindisi');
 
 	/*
 	Mostrare media, numero esami sostenuti e totale CFU acquisiti dello studente con matricola 123456.
