@@ -158,9 +158,3 @@ use universita;
 	where e.codice_modulo = "BdD"
 	group by e.codice_modulo
 	having e.voto > avg(e.voto);
-
-	/*
-	Mostrare matricola, nome, cognome di ogni studente che ha preso ad almeno
-	3 esami un voto maggiore della media per quel modulo.
-	*/
-
